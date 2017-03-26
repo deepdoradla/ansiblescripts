@@ -1,0 +1,13 @@
+---
+# tasks file for ambari-server
+  - name: Install and configure ambari-server
+    package: name=ambari-server state=latest
+    
+  - command: ambari-server setup -s
+  - command: ambari-server setup --jdbc-db=mysql --jdbc-driver=/usr/share/java/mysql-connector-java.jar
+  - name: Check for ambari-server status
+    command: ambari-server status
+    register: ambaristatus
+  - name: Start if ambari-server not running
+    service: name=ambari-server state=started
+    when: ambaristatus.stdout | search('.*Ambari Server not running.*')r
