@@ -1,0 +1,5 @@
+--- 
+- hosts: hdpcluster
+  tasks:
+    - name: Copy jdk-install file
+      copy: src=/opt/jdk-install.sh dest=/opt/ owner=root group=root mode=0744

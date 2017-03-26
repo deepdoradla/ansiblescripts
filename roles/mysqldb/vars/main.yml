@@ -1,0 +1,8 @@
+---
+# vars file for mysqldb
+mysql_users:
+  - { name: "demouser1", password: 1234, priv: "*.*:ALL,GRANT", host: "master1.cloudwick.com"}
+  - { name: "demouser2", password: 1235, priv: "*.*:ALL,GRANT", host: "master2.cloudwick.com"}
+  - { name: "ambari", password: "ambari", host: "%", priv: "*.*:ALL"}
+  - { name: "ambari", password: "ambari", host: "localhost", priv: "*.*:ALL"}
+  - { name: "ambari", password: "ambari", host: "master1.cloudwick.com", priv: "*.*:ALL"}

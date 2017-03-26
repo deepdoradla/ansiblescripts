@@ -1,0 +1,11 @@
+---
+# defaults file for mysqldb
+mysql_users: []
+  - name: demouser1
+    host: master2.cloudwick.com
+    password: 1234
+    priv: *.*:ALL
+  - name: demouser2
+    host: master3.cloudwick.com
+    password: 1234
+    priv: *.*:ALL   

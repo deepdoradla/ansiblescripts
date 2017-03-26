@@ -1,0 +1,5 @@
+--- 
+- hosts: hdpcluster
+  tasks:
+    - name: Copy pre-req file
+      copy: src=/opt/pre-req.sh dest=/opt/ owner=root group=root mode=0744

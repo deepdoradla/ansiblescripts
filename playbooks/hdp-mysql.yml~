@@ -1,0 +1,5 @@
+---
+- hosts: ambari[0]
+  become: true
+  roles:
+    - mysqldb

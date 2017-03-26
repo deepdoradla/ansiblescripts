@@ -1,0 +1,37 @@
+---
+- name: Installing pre-requisites for hdp cluster
+  hosts: hdpcluster
+  become: true
+  tasks:
+  - name: Install libselinux-python
+    package: name=libselinux-python state=latest
+  - name: diable SElinux
+    selinux: state=disabled
+  - name: set /etc/hosts
+    copy: src=/etc/hosts dest=/etc/ owner=root group=root mode=0644
+  - name: Prepare system for hacking
+    package: name=emacs-nox state=latest
+  - name: Enable EPEL
+    package: name=epel-release state=latest
+  - name: set ulimit to 10000
+    shell: ulimit -n 10000
+  - name: install ntp
+    package: name=ntp state=latest
+  - name: start ntp
+    service: name=ntpd state=started enabled=yes
+  - name: Disable SELinux
+    selinux: state=disabled
+  - name: Install HDP repo
+    yum_repository:
+      name: Ambari
+      description: ambari-2.4.2.0 - Updates
+      file: ambari.repo
+      baseurl: http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.4.2.0
+      gpgcheck: yes
+      gpgkey: http://public-repo-1.hortonworks.com/ambari/centos7/RPM-GPG-KEY/RPM-GPG-KEY-Jenkins
+      priority: 1
+  - name: install ambari-agent
+    package: name=ambari-agent state=latest
+  - name: Configure ambari-agent to see ambari-server
+    lineinfile: "dest=/etc/ambari-agent/conf/ambari-agent.ini state=present regexp='^hostname' line='hostname=master1.cloudwick.com'"
+

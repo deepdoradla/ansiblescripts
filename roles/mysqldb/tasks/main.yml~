@@ -1,0 +1,24 @@
+---
+# tasks file for mysqld
+  - name: Install mysql and configure roles and permissions
+    package: name={{item}} state=present update_cache=yes
+    with_items:
+      - mariadb-server
+      - MySQL-python
+
+  - name: ensure mysql listening on all ports
+    lineinfile: dest=/etc/my.cnf regexp=^bind-address line="bind-address = 0.0.0.0"
+    notify: restart mysql
+  
+  - name: Ensure mysql is started
+    service: name=mariadb state=started enabled=yes
+
+  - name: Create demo database
+    mysql_db: name={{item}} state=present
+    with_items:
+      - ambari
+      - hive
+
+  - name: Create demo user
+    mysql_user: name={{item.name}} password={{item.password}} priv={{item.priv}} host={{item.host}} state=present
+    with_items: "{{mysql_users}}"

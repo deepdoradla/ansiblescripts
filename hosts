@@ -1,0 +1,20 @@
+[hdpcluster]
+master1
+master2
+data1
+data2
+data3
+
+[control]
+control ansible_connection=local
+
+
+[data]
+data1
+data2
+data3
+
+[nifi]
+nifi1
+nifi2
+nifi3
